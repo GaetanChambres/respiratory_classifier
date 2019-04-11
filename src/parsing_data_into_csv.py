@@ -8,7 +8,7 @@ def parsing_data_to_csv(path_to_data_folder, path_to_diagnostic_file, path_to_cs
     input_data_dir = path_to_data_folder
     input_info = path_to_diagnostic_file
     output_dir = path_to_csv_folder
-    os.makedirs(output_dir, exist_ok=True)
+    # os.makedirs(output_dir, exist_ok=True)
     output = output_dir+csv_filename
     out_file = open(output, "w")
 

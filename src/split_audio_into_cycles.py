@@ -66,19 +66,19 @@ def split_record_in_cycle(dir,file_csv,output_dir) :
 
 ###########################################################################
 
-arguments = sys.argv
-if len(arguments) != 3:
-    print("Usage Error : wrong argument number")
-    print("Usage : \n arg1 = path_to_data_folder -with wav and txt inside- \n arg2 = path_to_csv_info_file")
-    sys.exit()
-directory = arguments[1]
-csv_info = arguments[2]
-sample_save_place = directory+"splitted_into_cycles/"
-os.makedirs(sample_save_place, exist_ok=True)
-
-total = split_record_in_cycle(directory,csv_info,sample_save_place)
-print()
-print("All files splitted :")
-print(str(total)+" samples saved in "+sample_save_place )
+# arguments = sys.argv
+# if len(arguments) != 3:
+#     print("Usage Error : wrong argument number")
+#     print("Usage : \n arg1 = path_to_data_folder -with wav and txt inside- \n arg2 = path_to_csv_info_file")
+#     sys.exit()
+# directory = arguments[1]
+# csv_info = arguments[2]
+# sample_save_place = directory+"splitted_into_cycles/"
+# os.makedirs(sample_save_place, exist_ok=True)
+#
+# total = split_record_in_cycle(directory,csv_info,sample_save_place)
+# print()
+# print("All files splitted :")
+# print(str(total)+" samples saved in "+sample_save_place )
 
 ###########################################################################
