@@ -27,20 +27,21 @@ def verify_working_directory(directory):
                 if(filename==CSV_FOLDER_NAME[:-1] or filename==SPLITTED_FOLDER_NAME[:-1]):
                     continue
                 else:
-                    print("ERROR : found an unexpected folder")
-                    print("This may be the wrong folder")
-                    return 0
+                    print("WARNING : found an non initial folder")
+                    print("This could be the wrong folder, be carefull !")
+                    # return 0
+                    continue
             elif(os.path.isfile(path)):
                 if (filename.endswith('.txt') or filename.endswith('wav')):
                     # print(filename+" looks like an expected file")
                     continue
                 else:
                     print('ERROR : found a non \'txt\' nor \'wav\' file')
-                    print("This may be the wrong folder")
+                    print("This should be the wrong folder")
                     return 0
             else:
-                # print("ERROR : found no file nor directory")
-                print("This may be the wrong folder")
+                print("ERROR : found no file nor directory")
+                print("This is the wrong folder")
                 return 0
         return 1
 
@@ -86,37 +87,35 @@ input_test_dir = arguments[1]+TEST_FOLDER
 diag_file = arguments[2]
 
 
-# if not (verify_working_directory(input_train_dir) or verify_working_directory(input_test_dir)):
-#     print("ERROR : Wrong folders")
-#     sys.exit()
+if not (verify_working_directory(input_train_dir) or verify_working_directory(input_test_dir)):
+    print("ERROR : Wrong folders")
+    sys.exit()
+
+print("OKKKKKKKK")
 
 # TRAIN
-# train_files = prsg.ordering_files(input_train_dir)
-print("aaaaaaaaaaaaaaaaaa")
+#######
 csv_train_dir = prsg.verify_folder(input_train_dir,CSV_FOLDER_NAME)
-print("bbbbbbbbbbbbbbbbbb")
 if(csv_train_dir == 0):
     print("ERROR : Can not find nor create the asked folder")
     sys.exit()
 # csv_creation(input_train_dir,diag_file,csv_train_dir,CSV_FILE_NAME,"TRAIN : ")
-print("ccccccccccccccccc")
 parsing_data_to_csv(input_train_dir,diag_file,csv_train_dir,CSV_FILE_NAME)
-print("ddddddddddddddddddd")
+
 #  TEST
-test_files = prsg.ordering_files(input_test_dir)
-csv_test_dir = prsg.verify_folder(input_train_dir,CSV_FOLDER_NAME)
+#######
+csv_test_dir = prsg.verify_folder(input_test_dir,CSV_FOLDER_NAME)
 if(csv_test_dir == 0):
     print("ERROR : Can not find nor create the asked folder")
     sys.exit()
 # csv_creation(input_test_dir,diag_file,csv_test_dir,CSV_FILE_NAME,"TEST : ")
 parsing_data_to_csv(input_test_dir,diag_file,csv_test_dir,CSV_FILE_NAME)
 
-print("OKKKKKKKKKK")
-sys.exit()
 # TRAIN
+cycles_train_dir = prsg.verify_folder(input_train_dir,SPLITTED_FOLDER_NAME)
 csv_train_file=csv_train_dir+CSV_FILE_NAME
-print(csv_train_file)
 splitting_audio(input_train_dir,csv_train_file,cycles_train_dir,"TRAIN : ")
-# # TEST
-# csv_test_file=csv_test_dir+CSV_FILE_NAME
-# splitting_audio(input_test_dir,csv_test_file,cycles_test_dir,"TEST : ")
+# TEST
+cycles_test_dir = prsg.verify_folder(input_test_dir,SPLITTED_FOLDER_NAME)
+csv_test_file=csv_test_dir+CSV_FILE_NAME
+splitting_audio(input_test_dir,csv_test_file,cycles_test_dir,"TEST : ")
