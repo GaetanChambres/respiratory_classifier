@@ -30,6 +30,7 @@ def verify_folder(directory,folder):
     # folders_list = ordering_files(directory)
     path=directory+folder
     if os.path.exists(path):
+        print()
         print("Folder \""+folder+"\" already existing at "+path)
         if(len(os.listdir(path)) != 0):
             print("ERROR : Folder \""+folder+"\" is not empty !")
@@ -37,8 +38,7 @@ def verify_folder(directory,folder):
             if erase == 'Y' or erase == 'y' :
                 # os.makedirs(path, exist_ok=True)
                 # print("Folder "+folder+" created at "+path)
-                print()
-                return path
+                return path,1
             elif erase == 'N' or erase == 'n' :
                 newfolder = input("Do you want to create a new folder ? Y/N :")
                 if newfolder == 'Y' or newfolder == 'y' :
@@ -47,61 +47,21 @@ def verify_folder(directory,folder):
                         path=directory+newname
                         os.makedirs(path, exist_ok=True)
                         print("Folder \""+newname+"\" created at "+path)
-                        print()
-                        return path
+                        return path,1
                     else:
                         print("ERROR : Invalid folder name. Please ensure that folder name ends with \'/\'")
-                        print()
-                        return 0
+                        return 0,0
 
                 elif newfolder == 'N' or newfolder == 'n' :
                     print("The old folder \""+ folder+"\" is kept with its actual content at "+path)
-                    print()
-                    return path
+                    return path,2
             else:
                 print("ERROR : Invalid answer")
-                print()
-                return 0
+                return 0,0
         else:
-            print()
-            return path
+            return path,1
     else:
         os.makedirs(path, exist_ok=True)
         print("Folder \""+folder+"\" created at "+path)
-        print()
-        return path
-
-    # for f in folders_list:
-    #     print(f)
-    #     if f == folder:
-    #         print("Folder "+folder+" already existing at "+path)
-    #         files_list = ordering_files(path)
-    #         if len(files_list)!=0:
-    #             print("ERROR : Folder "+folder+" is not empty !")
-    #             erase = input("Do you want to erase the existing content ? Y/N :")
-    #             if erase == Y or erase == y :
-    #                 # os.makedirs(path, exist_ok=True)
-    #                 # print("Folder "+folder+" created at "+path)
-    #                 return path
-    #             elif erase == N or erase == n :
-    #                 newfolder = input("Could you provide a new folder name please?")
-    #                 if newfolder.endswith("/"):
-    #                     path=directory+newfolder
-    #                     os.makedirs(path, exist_ok=True)
-    #                     print("Folder "+newfolder+" created at "+path)
-    #                     return path
-    #                 else:
-    #                     print("ERROR : Invalid folder name. Please ensure that folder name ends with \'/\'")
-    #                     return 0
-    #             else:
-    #                 print("ERROR : Invalid answer")
-    #                 return 0
-    #         else:
-    #             return path
-    # os.makedirs(path, exist_ok=True)
-    # print("Folder "+folder+" created at "+path)
-    # return path
-
-
-
+        return path,1
 ##########################################################################
