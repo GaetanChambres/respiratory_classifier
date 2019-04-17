@@ -6,12 +6,14 @@ import utilities.parsing_tools as prsg
 import xgboost.model as model
 from parsing_data_into_csv import parsing_data_to_csv
 from split_audio_into_cycles import split_record_in_cycle
+from compute_lowlevel_features import essentia_lowlevel_features_computation
 
 TRAIN_FOLDER = "train/"
 TEST_FOLDER = "test/"
 CSV_FOLDER_NAME = "csv/"
 CSV_FILE_NAME = "info.csv"
 SPLITTED_FOLDER_NAME = "splitted_cycles/"
+FEATURES_FOLDER_NAME = "features/"
 
 def verify_working_directory(directory):
     train_files = prsg.ordering_files(directory)
@@ -44,6 +46,10 @@ def verify_working_directory(directory):
                 print("This is the wrong folder")
                 return 0
         return 1
+
+def kind_of_features():
+
+    return 0
 
 
 
@@ -107,3 +113,19 @@ if(status == 0):
 elif(status == 1):
     # splitting_audio(input_test_dir,csv_test_file,cycles_test_dir,"TEST : ")
     split_record_in_cycle(input_test_dir,csv_test_file,cycles_test_dir)
+
+features_train_dir,status = prsg.verify_folder(input_test_dir,FEATURES_FOLDER_NAME)
+list_files = prsg.ordering_files(cycles_train_dir)
+if(status == 0):
+    print("ERROR : Can not find nor create the asked folder")
+    sys.exit()
+elif(status == 1):
+    for f in list_files:
+        print("1")
+        print(cycles_train_dir)
+        ft = essentia_lowlevel_features_computation(cycles_train_dir,f)
+        print(ft)
+        print("2")
+        print(features_train_dir+f)
+        print("3")
+        # pickle.dump(ft, open(cyc, 'wb'))

@@ -29,7 +29,8 @@ profile = {
 }
 
 def essentia_lowlevel_features_computation(dir,file) :
-    audio_in = dir + file + ".wav"
+    # audio_in = dir + file + ".wav"
+    audio_in = dir + file
     print(audio_in)
     # features, features_frames = es.FreesoundExtractor(**profile)(audio_in)
     features, features_frames = FreesoundExtractor(**profile)(audio_in)
@@ -138,5 +139,5 @@ def essentia_lowlevel_features_computation(dir,file) :
 
 
     #  MAIN
-arguments = sys.argv
-essentia_lowlevel_features_computation(arguments[1],arguments[2])
+# arguments = sys.argv
+# essentia_lowlevel_features_computation(arguments[1],arguments[2])
