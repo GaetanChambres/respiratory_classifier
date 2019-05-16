@@ -47,7 +47,7 @@ def split_record_in_cycle(dir,file_csv,output_dir) :
                 print("Processed record = "+data[i][0]+" nb cycle = "+str(cpt))
                 myaudio = pydub.AudioSegment.from_wav(dir+data[i][0]+".wav")
                 chunk_data = myaudio[int(float(data[i][1])*1000):int(float(data[i][2])*1000)]
-                saved_file = (output_dir+save_file_name+"_"+f"{cpt:02d}"+".wav")
+                saved_file = (output_dir+save_file_name+"_"+"{0:0=2d}".format(cpt)+".wav")
                 # print("saved cycle name = "+saved_file)
                 chunk_data.export(saved_file, format="wav")
                 i+=1
