@@ -4,7 +4,7 @@ import re
 import sys
 import pickle
 import utilities.parsing_tools as prsg
-import xgboost.model as model
+import models.model as model
 from parsing_data_into_csv import parsing_data_to_csv
 from split_audio_into_cycles import split_record_in_cycle
 from compute_lowlevel_features import essentia_lowlevel_features_computation
@@ -125,3 +125,13 @@ elif(status == 1):
         ft_path = features_train_dir+f[:-4]
         ft = essentia_lowlevel_features_computation(cycles_train_dir,f)
         pickle.dump(ft, open(ft_path, 'wb'))
+
+#
+#
+# At this point, data + features are ok
+# Next step is to import model and prepare input
+#
+#
+
+tree = model.create_xgb_model()
+print("tree created")
