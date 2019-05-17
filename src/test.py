@@ -2,6 +2,7 @@ import os
 import csv
 import re
 import sys
+import pickle
 import utilities.parsing_tools as prsg
 import xgboost.model as model
 from parsing_data_into_csv import parsing_data_to_csv
@@ -121,11 +122,6 @@ if(status == 0):
     sys.exit()
 elif(status == 1):
     for f in list_files:
-        print("1")
-        print(cycles_train_dir)
+        ft_path = features_train_dir+f[:-4]
         ft = essentia_lowlevel_features_computation(cycles_train_dir,f)
-        print(ft)
-        print("2")
-        print(features_train_dir+f)
-        print("3")
-        # pickle.dump(ft, open(cyc, 'wb'))
+        pickle.dump(ft, open(ft_path, 'wb'))
