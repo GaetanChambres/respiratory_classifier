@@ -3,6 +3,8 @@ import csv
 import re
 import sys
 import pickle
+import tables
+import numpy as np
 import utilities.parsing_tools as prsg
 import models.model as model
 from parsing_data_into_csv import parsing_data_to_csv
@@ -115,15 +117,15 @@ elif(status == 1):
     # splitting_audio(input_test_dir,csv_test_file,cycles_test_dir,"TEST : ")
     split_record_in_cycle(input_test_dir,csv_test_file,cycles_test_dir)
 
-features_train_dir,status = prsg.verify_folder(input_test_dir,FEATURES_FOLDER_NAME)
-list_files = prsg.ordering_files(cycles_train_dir)
+features_test_dir,status = prsg.verify_folder(input_test_dir,FEATURES_FOLDER_NAME)
+list_files = prsg.ordering_files(cycles_test_dir)
 if(status == 0):
     print("ERROR : Can not find nor create the asked folder")
     sys.exit()
 elif(status == 1):
     for f in list_files:
-        ft_path = features_train_dir+f[:-4]
-        ft = essentia_lowlevel_features_computation(cycles_train_dir,f)
+        ft_path = features_test_dir+f[:-4]
+        ft = essentia_lowlevel_features_computation(cycles_test_dir,f)
         pickle.dump(ft, open(ft_path, 'wb'))
 
 #
@@ -132,6 +134,46 @@ elif(status == 1):
 # Next step is to import model and prepare input
 #
 #
+test = "../../data/test/features/"
+l = prsg.ordering_files(test)
+dim1 = len(l)
+tmp = pickle.load(open(test+l[0],'rb'))
+dim2 = len(tmp)
+array = np.zeros((dim1,dim2))
+# print("ARRAY OK ?")
+# print(array)
+# print(array.shape)
+print(type(array[0]))
+print(type(array[0,0]))
+cpt=0
+for f in l:
+    tmp = pickle.load(open(test+f,'rb'))
+    tmparray = np.asarray(tmp)
+    array[cpt] = tmparray
+    cpt+=1
 
-tree = model.create_xgb_model()
-print("tree created")
+#
+#
+#  at this point, all pickles files are packed in the array
+#
+#
+
+csv_path = "../../data/test/csv/info.csv"
+# crackles = np.loadtxt(csv_path,delimiter = ',',skiprows = 0,usecols=range(4,5))
+# print(crackles)
+# print(len(crackles))
+wheezes = np.loadtxt(csv_path,delimiter = ',',skiprows = 0,usecols=range(5,6))
+print(wheezes)
+print(type(wheezes[0]))
+
+# tree = model.create_xgb_model()
+
+import xgboost as xgb
+
+tree = xgb.XGBClassifier(base_score='0.5', booster='gbtree', colsample_bylevel='1',
+colsample_bytree='1', gamma='0', learning_rate='0.1', max_delta_step='0',
+max_depth='3', min_child_weight='1', missing='None', n_estimators='100',
+n_jobs='1', nthread='None', objective='binary:logistic', random_state='0',
+reg_alpha='0', reg_lambda='1', scale_pos_weight='1', seed='None', silent='True', subsample='1')
+
+tree.fit(array, wheezes)
