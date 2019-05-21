@@ -117,13 +117,24 @@ elif(status == 1):
     # splitting_audio(input_test_dir,csv_test_file,cycles_test_dir,"TEST : ")
     split_record_in_cycle(input_test_dir,csv_test_file,cycles_test_dir)
 
-features_test_dir,status = prsg.verify_folder(input_test_dir,FEATURES_FOLDER_NAME)
-list_files = prsg.ordering_files(cycles_test_dir)
+features_train_dir,status = prsg.verify_folder(input_train_dir,FEATURES_FOLDER_NAME)
+list_features = prsg.ordering_files(cycles_train_dir)
 if(status == 0):
     print("ERROR : Can not find nor create the asked folder")
     sys.exit()
 elif(status == 1):
-    for f in list_files:
+    for f in list_features:
+        ft_path = features_train_dir+f[:-4]
+        ft = essentia_lowlevel_features_computation(cycles_train_dir,f)
+        pickle.dump(ft, open(ft_path, 'wb'))
+
+features_test_dir,status = prsg.verify_folder(input_test_dir,FEATURES_FOLDER_NAME)
+list_features = prsg.ordering_files(cycles_test_dir)
+if(status == 0):
+    print("ERROR : Can not find nor create the asked folder")
+    sys.exit()
+elif(status == 1):
+    for f in list_features:
         ft_path = features_test_dir+f[:-4]
         ft = essentia_lowlevel_features_computation(cycles_test_dir,f)
         pickle.dump(ft, open(ft_path, 'wb'))
@@ -134,22 +145,48 @@ elif(status == 1):
 # Next step is to import model and prepare input
 #
 #
-test = "../../../database/debug/test/features/"
-l = prsg.ordering_files(test)
+print(features_train_dir)
+print("okkkkkkk")
+
+train = features_train_dir
+test = features_test_dir
+
+l = prsg.ordering_files(train)
+
 dim1 = len(l)
-tmp = pickle.load(open(test+l[0],'rb'))
+tmp = pickle.load(open(train+l[0],'rb'))
 dim2 = len(tmp)
-array = np.zeros((dim1,dim2))
+array_train = np.zeros((dim1,dim2))
 # print("ARRAY OK ?")
 # print(array)
-print(array.shape)
+# print(array.shape)
 # print(type(array[0]))
 # print(type(array[0,0]))
 cpt=0
 for f in l:
+    tmp = pickle.load(open(train+f,'rb'))
+    tmparray = np.asarray(tmp)
+    array_train[cpt] = tmparray
+    cpt+=1
+
+
+l2 = prsg.ordering_files(test)
+
+dim1 = len(l2)
+tmp2 = pickle.load(open(test+l2[0],'rb'))
+dim2 = len(tmp2)
+array_test = np.zeros((dim1,dim2))
+# print("ARRAY OK ?")
+# print(array)
+# print(array.shape)
+# print(type(array[0]))
+# print(type(array[0,0]))
+
+cpt=0
+for f in l2:
     tmp = pickle.load(open(test+f,'rb'))
     tmparray = np.asarray(tmp)
-    array[cpt] = tmparray
+    array_test[cpt] = tmparray
     cpt+=1
 
 #
@@ -158,7 +195,7 @@ for f in l:
 #
 #
 
-csv_path = "../../../database/debug/test/csv/info.csv"
+csv_path = csv_train_file
 # crackles = np.loadtxt(csv_path,delimiter = ',',skiprows = 0,usecols=range(4,5))
 # print(crackles)
 wheezes = np.loadtxt(csv_path,delimiter = ',',skiprows = 0,usecols=range(5,6))
@@ -177,7 +214,12 @@ n_jobs=1, nthread=None, objective='binary:logistic', random_state=0,
 reg_alpha=0, reg_lambda=1, scale_pos_weight=1, seed=None, silent=True, subsample=1)
 
 
-print("oooooooooooooooooooooooooooooook")
-print()
+tree.fit(array_train, wheezes)
 
-tree.fit(array, wheezes)
+preds = tree.predict(array_test)
+predictions = [round(value) for value in preds]
+
+from sklearn.metrics import accuracy_score
+y = np.loadtxt(csv_test_file,delimiter = ',',skiprows = 0,usecols=range(5,6))
+accuracy = accuracy_score(y, preds)
+print("Accuracy: %.2f%%" % (accuracy * 100.0))
