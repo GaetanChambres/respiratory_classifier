@@ -134,7 +134,7 @@ elif(status == 1):
 # Next step is to import model and prepare input
 #
 #
-test = "../../data/test/features/"
+test = "../../../database/debug/test/features/"
 l = prsg.ordering_files(test)
 dim1 = len(l)
 tmp = pickle.load(open(test+l[0],'rb'))
@@ -142,9 +142,9 @@ dim2 = len(tmp)
 array = np.zeros((dim1,dim2))
 # print("ARRAY OK ?")
 # print(array)
-# print(array.shape)
-print(type(array[0]))
-print(type(array[0,0]))
+print(array.shape)
+# print(type(array[0]))
+# print(type(array[0,0]))
 cpt=0
 for f in l:
     tmp = pickle.load(open(test+f,'rb'))
@@ -158,22 +158,26 @@ for f in l:
 #
 #
 
-csv_path = "../../data/test/csv/info.csv"
+csv_path = "../../../database/debug/test/csv/info.csv"
 # crackles = np.loadtxt(csv_path,delimiter = ',',skiprows = 0,usecols=range(4,5))
 # print(crackles)
-# print(len(crackles))
 wheezes = np.loadtxt(csv_path,delimiter = ',',skiprows = 0,usecols=range(5,6))
-print(wheezes)
-print(type(wheezes[0]))
+print(len(wheezes))
+# print(wheezes)
+# print(type(wheezes[0]))
 
 # tree = model.create_xgb_model()
 
 import xgboost as xgb
 
-tree = xgb.XGBClassifier(base_score='0.5', booster='gbtree', colsample_bylevel='1',
-colsample_bytree='1', gamma='0', learning_rate='0.1', max_delta_step='0',
-max_depth='3', min_child_weight='1', missing='None', n_estimators='100',
-n_jobs='1', nthread='None', objective='binary:logistic', random_state='0',
-reg_alpha='0', reg_lambda='1', scale_pos_weight='1', seed='None', silent='True', subsample='1')
+tree = xgb.XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
+colsample_bytree=1, gamma=0, learning_rate=0.1, max_delta_step=0,
+max_depth=3, min_child_weight=1, missing=None, n_estimators=100,
+n_jobs=1, nthread=None, objective='binary:logistic', random_state=0,
+reg_alpha=0, reg_lambda=1, scale_pos_weight=1, seed=None, silent=True, subsample=1)
+
+
+print("oooooooooooooooooooooooooooooook")
+print()
 
 tree.fit(array, wheezes)
