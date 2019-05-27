@@ -145,8 +145,6 @@ elif(status == 1):
 # Next step is to import model and prepare input
 #
 #
-print(features_train_dir)
-print("okkkkkkk")
 
 train = features_train_dir
 test = features_test_dir
