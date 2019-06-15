@@ -37,6 +37,7 @@ for r in range(0,len(files_list)):
 for f1 in pbar(files_list): #pbar is progressbar; only visual
 
     y, sr = librosa.load(cycles_path+f1)
+    # print("sampling rate = ",sr)
 
     # print("label =")
     # print(crackles[cpt])
