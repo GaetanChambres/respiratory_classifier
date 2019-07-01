@@ -1,4 +1,15 @@
 # Byte-compiled / optimized / DLL files
+
+# Data
+DATA/
+Data/
+data/
+*.pickle
+*.pickles
+*.csv
+*.zip
+*.tar
+
 __pycache__/
 *.py[cod]
 

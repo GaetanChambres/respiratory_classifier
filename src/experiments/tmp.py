@@ -27,7 +27,8 @@ files_list = ordering_files(cycles_path)
 
 crackles = np.loadtxt(csv_file,delimiter = ',',skiprows = 0,usecols=range(5,6))
 cpt=0
-
+cpt1=0
+cpt0=0
 mylist=[]
 for r in range(0,len(files_list)):
     mylist.append(0)
@@ -42,7 +43,12 @@ for f1 in pbar(files_list): #pbar is progressbar; only visual
     # print(crackles[cpt])
     # print("values =")
     # print(y)
-
+    if crackles[cpt]==0:
+        cpt0+=1
+    elif crackles[cpt]==1:
+        cpt1+=1
+    else:
+        print("ERROOOOOOOOOOOOOR")
     a = np.append(y,crackles[cpt]) #add label after the values
 
     # print("append of values and label :")
@@ -59,5 +65,6 @@ print(len(mylist)) #should give the number of files
 # print(mylist)
 
 pickle.dump(mylist,open('train_crackles','wb'))
-
+print("cycles with crackles : ",cpt1)
+print("cycles without crackles",cpt0)
 print("Finished")
