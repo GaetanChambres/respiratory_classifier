@@ -11,7 +11,7 @@ def create_model() :
 
     return model
 
-def prepare_data(train_dir,test_dir,csv_train_path,csv_train_path,label_col) :
+def prepare_data(train_dir,test_dir,csv_train_path,csv_test_path,label_col) :
 
     l = prsg.ordering_files(train_dir)
     dim1 = len(l)
