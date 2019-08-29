@@ -1,5 +1,9 @@
 # Byte-compiled / optimized / DLL files
 
+# special
+test_crackles
+train_crackles
+
 # Data
 pickles/
 DATA/
