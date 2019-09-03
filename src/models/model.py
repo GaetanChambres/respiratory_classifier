@@ -44,14 +44,14 @@ def prepare_data(train_dir,test_dir,csv_train_path,csv_test_path,label_col) :
 
     return data_train, labels_train, data_test, labels_train
 
-def train_model(model,data_train,labels_train):
+def train_model(model,data_train,labels_train,array_test,y):
 
     model.fit(data_train, labels_train)
 
-    preds = tree.predict(array_test)
+    preds = model.predict(array_test)
     predictions = [round(value) for value in preds]
 
     from sklearn.metrics import accuracy_score
-    y = np.loadtxt(csv_test_file,delimiter = ',',skiprows = 0,usecols=range(5,6))
+    # y = np.loadtxt(csv_test_file,delimiter = ',',skiprows = 0,usecols=range(5,6))
     accuracy = accuracy_score(y, preds)
     print("Accuracy: %.2f%%" % (accuracy * 100.0))
