@@ -55,9 +55,9 @@ mylist=[]
 labels =[]
 
 # creation of the final list, with len(files_list) the size (the number of files)
-for r in range(0,len(files_list)):
-    mylist.append(0)
-    labels.append(0)
+# for r in range(0,len(files_list)):
+#     mylist.append(0)
+#     labels.append(0)
 # print(len(mylist))
 # print(mylist)
 
@@ -78,7 +78,8 @@ for f1 in pbar(files_list): #pbar is progressbar; only visual
             # a = np.append(y,pathologies[cpt]) #add patho label after the audio values
             a = np.append(y,0) #add 0 to labelize healthy record
 
-            mylist[cpt]=a #save the final array into a list of arrays
+            # mylist[cpt]=a #save the final array into a list of arrays
+            mylist.append(a)
             # labels[cpt] = 0
         else:
             print("encoutered a cycle healthy with symptoms")
@@ -88,17 +89,20 @@ for f1 in pbar(files_list): #pbar is progressbar; only visual
             # a = np.append(y,pathologies[cpt]) #add patho label after the audio values
             a = np.append(y,1) #add 1 to labelize healthy record
 
-            mylist[cpt]=a #save the final array into a list of arrays
+            # mylist[cpt]=a #save the final array into a list of arrays
+            mylist.append(a)
             # labels[cpt]=1
 
     cpt+=1
 
-print(len(mylist)) #should give the number of files
+print("healthy cycles without symptoms",cpt0)
+print("pathological cycles whithout symptoms : ",cpt1)
+print("total interesting values should be : ",cpt0+cpt1)
+print("total is actually : ",len(mylist)) #should give the number of files
 # print(len(labels))
 # print(len(mylist[0]))
 
 pickle.dump(mylist,open('pickles/test_NOsymptoms','wb'))
 # pickle.dump(labels,open('pickles/train_labels','wb'))
-print("healthy cycles without symptoms",cpt0)
-print("pathological cycles whithout symptoms : ",cpt1)
+
 print("Finished")
