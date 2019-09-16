@@ -4,7 +4,8 @@ import librosa
 import numpy as np
 import pickle
 
-thearray = pickle.load(open("pickles/test_NOsymptoms",'rb'))
+thearray = pickle.load(open("pickles/train_NOsymptoms",'rb'))
+print("train")
 print(len(thearray))
 print()
 
@@ -12,7 +13,8 @@ print()
 # print(len(thearray2))
 # print()
 
-array = pickle.load(open("pickles/train_NOsymptoms",'rb'))
+array = pickle.load(open("pickles/test_NOsymptoms",'rb'))
+print("test")
 print(len(array))
 print()
 
@@ -31,3 +33,13 @@ print()
 #
 # for i in range(0,len(thearray)-1):
 #     print(len(thearray[i]))
+
+array3 = pickle.load(open("pickles/balanced_train_NOsymptoms",'rb'))
+print("balanced train")
+print(len(array3))
+print()
+
+array4 = pickle.load(open("pickles/balanced_test_NOsymptoms",'rb'))
+print("balanced test")
+print(len(array4))
+print()
