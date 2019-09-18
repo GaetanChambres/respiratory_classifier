@@ -56,7 +56,11 @@ cpt=0
 cpt0=0
 cpt1=0
 mylist=[]
-# labels =[]
+labels =[]
+
+output = dest_folder+target_value+".csv"
+out_file = open(output, "w")
+
 
 from shutil import copyfile
 
@@ -74,6 +78,7 @@ for f1 in pbar(files_list): #pbar is progressbar; only visual
                 y, sr = librosa.load(cycles_path+f1) # open the audio file
                 a = np.append(y,0) #add 0 to labelize healthy record
                 mylist.append(a)
+                out_file.write(f1[:-4]+",0\n")
             else:
                 print("encoutered a cycle healthy with symptoms")
 
@@ -85,6 +90,7 @@ for f1 in pbar(files_list): #pbar is progressbar; only visual
                     y, sr = librosa.load(cycles_path+f1) # open the audio file
                     a = np.append(y,1) #add 0 to labelize healthy record
                     mylist.append(a)
+                    out_file.write(f1[:-4]+",1\n")
 
     cpt+=1
 print("healthy cycles without symptoms",cpt0)
