@@ -1,4 +1,5 @@
 import os
+import shutil
 # Function that returns the number of lines from a given file
 ###########################################################################
 def nb_lines(fname):
@@ -36,6 +37,7 @@ def verify_folder(directory,folder):
             print("ERROR : Folder \""+folder+"\" is not empty !")
             erase = input("Do you want to erase the existing content ? Y/N :")
             if erase == 'Y' or erase == 'y' :
+                shutil.rmtree(path)
                 os.makedirs(path, exist_ok=True)
                 print("Folder "+folder+" created at "+path)
                 return path,1
