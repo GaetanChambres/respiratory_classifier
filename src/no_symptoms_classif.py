@@ -21,11 +21,15 @@ def file_len(fname):
     return i + 1
 
 print("LF -- LOADING FILES")
-input_train = "./experiments/data/balanced_data/ft_train.csv"
-info_train = "./experiments/data/balanced_data/train.csv"
+# input_train = "./experiments/data/balanced_data/ft_train.csv"
+# info_train = "./experiments/data/balanced_data/train.csv"
+input_train = "./experiments/data/samples/ft_train.csv"
+info_train = "./experiments/data/samples/train.csv"
 
-input_test = "./experiments/data/balanced_data/ft_test.csv"
-info_test = "./experiments/data/balanced_data/test.csv"
+# input_test = "./experiments/data/balanced_data/ft_test.csv"
+# info_test = "./experiments/data/balanced_data/test.csv"
+input_test = "./experiments/data/samples/ft_test.csv"
+info_test = "./experiments/data/samples/test.csv"
 
 with open(input_train) as f1:
     nbcols_train = csv_nb_cols(f1,delimiter = ",")
@@ -55,10 +59,17 @@ reg_alpha=0, reg_lambda=1, scale_pos_weight=1, seed=None, silent=True, subsample
 
 tree.fit(features_train,labels_train)
 
+xgb.plot_importance(tree,max_num_features = 25)
+from matplotlib import pyplot
+# xgb.plot_tree(model)
+pyplot.show()
+print()
+
 preds = tree.predict(features_test)
 predictions = [round(value) for value in preds]
 
 from sklearn.metrics import accuracy_score
+print(preds)
 accuracy = accuracy_score(labels_test, preds)
 print("Accuracy: %.2f%%" % (accuracy * 100.0))
 
