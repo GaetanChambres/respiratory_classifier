@@ -22,6 +22,9 @@ pbar = ProgressBar()
 CYCLES_FOLDER = "splitted_cycles/"
 CSV_PATH = "csv/info.csv"
 
+csv_file = "pickles/test.csv"
+pickle_file = 'pickles/test_NOsymptoms'
+
 # Function that return an alphabetically ordered list
 # of the files included in a given directory
 ###########################################################################
@@ -61,6 +64,10 @@ labels =[]
 # print(len(mylist))
 # print(mylist)
 
+out_file = open(csv_file, "w")
+
+from shutil import copyfile
+
 for f1 in pbar(files_list): #pbar is progressbar; only visual
 
     y, sr = librosa.load(cycles_path+f1) # open the audio file
@@ -81,6 +88,7 @@ for f1 in pbar(files_list): #pbar is progressbar; only visual
             # mylist[cpt]=a #save the final array into a list of arrays
             mylist.append(a)
             # labels[cpt] = 0
+            out_file.write(f1[:-4]+",0\n")
         else:
             print("encoutered a cycle healthy with symptoms")
     else:
@@ -92,6 +100,7 @@ for f1 in pbar(files_list): #pbar is progressbar; only visual
             # mylist[cpt]=a #save the final array into a list of arrays
             mylist.append(a)
             # labels[cpt]=1
+            out_file.write(f1[:-4]+",1\n")
 
     cpt+=1
 
@@ -102,7 +111,7 @@ print("total is actually : ",len(mylist)) #should give the number of files
 # print(len(labels))
 # print(len(mylist[0]))
 
-pickle.dump(mylist,open('pickles/test_NOsymptoms','wb'))
+pickle.dump(mylist,open(pickle_file,'wb'))
 # pickle.dump(labels,open('pickles/train_labels','wb'))
 
 print("Finished")
