@@ -107,12 +107,15 @@ print("TRAIN")
 for f in pbar(list_features):
     filename = f[:-4]
     ft_path = input_train_dir+filename
-    ft = essentia_lowlevel_features_computation(input_train_dir,f)
-    # print(ft)
-    out_train_csv.write(filename)
-    for val in ft:
-        out_train_csv.write(","+val)
-    out_train_csv.write("\n")
+    print(input_train_dir+f)
+    if(os.path.isfile(input_train_dir+f)):
+        # print(f)
+        ft = essentia_lowlevel_features_computation(input_train_dir,f)
+        # print(ft)
+        out_train_csv.write(filename)
+        for val in ft:
+            out_train_csv.write(","+val)
+        out_train_csv.write("\n")
 
     # hello += 1
     # pickle.dump(ft, open(ft_path, 'wb'))
@@ -133,10 +136,12 @@ list_features = prsg.ordering_files(input_test_dir)
 for f in list_features:
     filename = f[:-4]
     ft_path = input_test_dir+filename
-    ft = essentia_lowlevel_features_computation(input_test_dir,f)
-    out_test_csv.write(filename)
-    for val in ft:
-        out_test_csv.write(","+val)
-    out_test_csv.write("\n")
+    print(input_test_dir+f)
+    if(os.path.isfile(input_test_dir+f)):
+        ft = essentia_lowlevel_features_computation(input_test_dir,f)
+        out_test_csv.write(filename)
+        for val in ft:
+            out_test_csv.write(","+val)
+        out_test_csv.write("\n")
 
     # pickle.dump(ft, open(ft_path, 'wb'))
