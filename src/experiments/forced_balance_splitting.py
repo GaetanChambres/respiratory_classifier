@@ -8,7 +8,8 @@ from progressbar import ProgressBar
 
 pbar = ProgressBar()
 
-CYCLES_FOLDER = "splitted_cycles/"
+# CYCLES_FOLDER = "splitted_cycles/"
+CYCLES_FOLDER = ""
 CSV_PATH = "csv/info.csv"
 dest_folder = "data/balanced_data/"
 
@@ -23,14 +24,16 @@ arguments = sys.argv
 input_dir = arguments[1]
 
 list = input_dir.split("/")
-target_value = list[6]
+target_value = list[len(arguments)-1]
 target = target_value+"/"
 
 if target_value == "train":
-    max_n_files = 133
+    # max_n_files = 133
+    max_n_files = 3509929 # Zevent tribute
     final_file_name = "balanced_train_NOsymptoms"
 if target_value == "test":
-    max_n_files = 170
+    # max_n_files = 170
+    max_n_files = 3509929 # Zevent tribute
     final_file_name = "balanced_test_NOsymptoms"
 
 
@@ -100,7 +103,7 @@ print("total is actually : ",len(mylist)) #should give the number of files
 
 pickle.dump(mylist,open('pickles/'+final_file_name,'wb'))
 
-
+print("csv saved in "+output)
 # cpt_tmp = 0
 # files_list2 = ordering_files(dest_path)
 # for f2 in files_list2:
