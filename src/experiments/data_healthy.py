@@ -22,8 +22,8 @@ pbar = ProgressBar()
 CYCLES_FOLDER = "splitted_cycles/"
 CSV_PATH = "csv/info.csv"
 
-csv_file = "pickles/test.csv"
-pickle_file = 'pickles/test_NOsymptoms'
+out_csv_file = "train.csv"
+pickle_file = './pickles/test_NOsymptoms'
 
 # Function that return an alphabetically ordered list
 # of the files included in a given directory
@@ -64,7 +64,7 @@ labels =[]
 # print(len(mylist))
 # print(mylist)
 
-out_file = open(csv_file, "w")
+out_file = open(out_csv_file, "w")
 
 from shutil import copyfile
 
@@ -111,7 +111,7 @@ print("total is actually : ",len(mylist)) #should give the number of files
 # print(len(labels))
 # print(len(mylist[0]))
 
-pickle.dump(mylist,open(pickle_file,'wb'))
+# pickle.dump(mylist,open(pickle_file,'wb'))
 # pickle.dump(labels,open('pickles/train_labels','wb'))
 
 print("Finished")
