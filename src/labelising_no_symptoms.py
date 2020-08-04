@@ -19,7 +19,6 @@ from progressbar import ProgressBar
 
 pbar = ProgressBar()
 
-out_csv_file = "experiments/data/horse_v3/test.csv"
 
 
 # Function that return an alphabetically ordered list
@@ -30,9 +29,10 @@ def ordering_files(directory):
 ##########################################################################
 
 
+out_csv_file = "experiments/data/horse_v3/train.csv"
 
-cycles_path = "experiments/data/horse_v3/test/"
-csv_file = "experiments/data/horse_v3/info_test_ch.csv"
+cycles_path = "experiments/data/horse_v3/train/"
+csv_file = "experiments/data/horse_v3/info_train_ch.csv"
 
 files_list = ordering_files(cycles_path)
 

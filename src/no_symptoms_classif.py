@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import xgboost as xgb
 import csv as csv
+import sys
 # from sklearn.model_selection import train_test_split
 import sklearn.metrics as sklm
 
@@ -39,8 +40,8 @@ dir = arguments[1]
 # input_train = "./experiments/data/horse_v3/ft_test.csv"
 # info_train = "./experiments/data/horse_v3/test.csv"
 
-input_test = dir+"ft_train.csv"
-info_test = dir+"train.csv"
+input_train = dir+"ft_test.csv"
+info_train = dir+"test.csv"
 
 # -----------------------------------------------------------------------------
 # input_test = "./experiments/data/equal_split/ft_test.csv"
@@ -59,8 +60,8 @@ info_test = dir+"train.csv"
 # input_test = "./experiments/data/horse_v3/ft_train.csv"
 # info_test = "./experiments/data/horse_v3/train.csv"
 
-input_test = dir+"ft_test.csv"
-info_test = dir+"test.csv"
+input_test = dir+"ft_train.csv"
+info_test = dir+"train.csv"
 
 with open(input_train) as f1:
     nbcols_train = csv_nb_cols(f1,delimiter = ",")
