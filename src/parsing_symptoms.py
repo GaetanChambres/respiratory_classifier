@@ -24,7 +24,9 @@ def nb_lines(fname):
 
 
 cycles_path = ""
-csv_path = "ICBHI_final_database/test/csv-info/test-info.csv"
+# csv_path = "ICBHI_final_database/test/csv-info/test-info.csv"
+
+csv_path = "../../../database/challenge/test/csv/info_cycles_test.csv"
 
 # files_list = ordering_files(cycles_path)
 
